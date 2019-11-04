@@ -63,8 +63,26 @@ path.resolve:方法会把一个路径或路径片段的序列解析为一个绝�
 
 2 安装 react-loader：
 
-> 安装依赖包：cnpm i react react-dom @babel/preset-react -D
+> 安装依赖：cnpm i react react-dom @babel/preset-react -D
 >
 > > 在.babelrc 文件里添加@babel/preset-react 即可使用,(具体见 src/Main.js 使用)
 
 3 安装 css-loader
+
+> 安装依赖：cnpm i style-loader css-loader -D
+>
+> > 在 webpack.config.js 中写上
+> > `{ test: /.css$/, use: ['style-loader', 'css-loader'] }`
+> > ，然后就可以在页面里引入 css 样式直接使用
+
+3.1 在项目里安装 less
+
+> 安装依赖：cnpm i less less-loader -D
+> `{ test: /.less$/, use: ['style-loader', 'css-loader', 'less-loader'] }`
+> 即可使用
+
+3.2 在项目里安装 stylus
+
+> 安装依赖：cnpm i stylus stylus-loader -D
+> `{ test: /.styl$/, use: ['style-loader', 'css-loader', 'stylus-loader'] }`
+> 即可使用
