@@ -7,15 +7,15 @@
 配置 webpack.config.js 文件：
 
 ```javascript
-const path = require('path')
+const path = require("path");
 module.exports = {
-  mode: 'production', // 生产模式
-  entry: './src/index.js', //入口文件
+  mode: "production", // 生产模式
+  entry: "./src/index.js", //入口文件
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    path: path.resolve(__dirname, "dist"),
+    filename: "bundle.js"
   }
-}
+};
 ```
 
 ### 打包：node_modules/.bin/webpack 即可
@@ -86,3 +86,48 @@ path.resolve:方法会把一个路径或路径片段的序列解析为一个绝�
 > 安装依赖：cnpm i stylus stylus-loader -D
 > `{ test: /.styl$/, use: ['style-loader', 'css-loader', 'stylus-loader'] }`
 > 即可使用
+
+### 文件监听
+
+每次项目修改后，都需要重新编译打包，现在使用文件监听，可以监听并打包
+
+> 在 package.json -> script 里加一个命令：
+
+```
+"watch":"webpack --watch"
+```
+
+### 文件热更新
+
+1 webpack-dev-server：
+
+> 文件监听会在磁盘里生成最新的打包后的文件，但是还需要在页面上手动刷新才可以，热更新会在内存中生成，本地代码变化后直接同步页面做出修改
+
+```javascript
+//在package.json => script中：
+"dev": "webpack-dev-server --open" //--open会默认打开浏览器
+//在webpack.config.js文件中：
+//先引入webpack
+const webpack = require("webpack");
+//在导出的模块里：
+// dev-server是在开发环境中使用的，所以要把mode属性改成:development
+mode:"development",
+ // 安装插件
+  plugins: [new webpack.HotModuleReplacementPlugin()],
+  devServer: {
+    contentBase: "./dist",
+    hot: true
+  }
+```
+
+> 然后 npm run dev
+
+> > 如果提示 Cannot find module 'webpack',依次安装下面三个命令就好啦~
+
+```javascript
+npm install webpack
+npm install webpack-dev-server
+npm install --save-dev webpack-cli
+```
+
+2 webpack-dev-middleware：中间件也可实现热更新
